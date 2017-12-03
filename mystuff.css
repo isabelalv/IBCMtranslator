@@ -1,0 +1,53 @@
+body{
+    background-color: darkorange;
+    color:darkblue;
+    align-content: center;
+    text-align: center;
+}
+header{
+    text-align: center;
+}
+
+table#01{
+     font-family:serif
+    width: 100%
+}
+th#01{
+    text-align: center
+    font: Times New Roman;
+    height:20px;
+}
+tr#01{
+    align-content: center;
+    font: Times New Roman;
+}
+textarea#style1{
+    font-family: "Courier New", Georgia, Serif;
+    resize:none;
+    background-color: darkorange;
+    border-style: none;
+    height: 3860px;
+    width: 80px;
+    text-align: right;
+    user-select: none;
+}
+
+textarea#style2{
+    font-family: "Courier New", Georgia, Serif;
+    resize:none;
+    height: 3860px;
+    width: 600px;
+}
+textarea#style3{
+    font-family: "Courier New", Georgia, Serif;
+    resize:none;
+    height: 3860px;
+    width: 600px;
+    color:black;
+    background-color: darkorange;
+    border-style: none;
+}
+table#02{
+    border: 2px solid black;
+    text-align: left;
+}
