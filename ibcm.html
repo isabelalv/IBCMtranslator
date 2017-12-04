@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="mystuff.css">
+</head>
+
+<body>
+    <h1 text-align=center> <b>IBCM Translate</b> </h1>
+    <p>Delcaring variables: varName: dw value //declare variable; How to use a variable:
+        <br> Load i
+        <br> start: jump end
+        <br> //start is a label, jump is a op, and end a label that has an address to it. //we do not directly accept addresses; use labels when summoning addresses.
+    </p>
+    <table>
+        <tr>
+            <th>OpCodeInstructions</th>
+            <th>OpCodeInstructions(cont)</th>
+            <th>I/O</th>
+            <th>Shifts</th>
+        </tr>
+        <tr>
+            <td>load varName //load to accumulator from memory</td>
+            <td>Nop //does nothing </td>
+            <td>printh //print hex decimal to screen</td>
+            <td>shiftl X //shifts all bits to the left </td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>store varName //stores accumulator into memory </td>
+            <td>jmp label //jump to where the label is located at </td>
+            <td>printa //print the ascii to screen read</td>
+            <td>shiftr X //shift all bits to the right</td>
+        </tr>
+        <tr>
+            <td>add varName //add what’s in the accumulator </td>
+            <td>jmpe label //jump if accumulator is equal to 0 where the label located </td>
+            <td>readh // read in hex number</td>
+            <td>rotatel X //rotate all bits left</td>
+        </tr>
+        <tr>
+            <td>sub varName //subtract what’s in the accumulator</td>
+            <td>jmpl label //jump if the accumulator is less than 0 to the label </td>
+            <td>reada // read in ascii number</td>
+            <td>rotater X //rotate bits to the right</td>
+        </tr>
+        <tr>
+            <td>and varName //logical and memory into accumulator</td>
+            <td>brl label //jump to label sets accumulator to the value of the PC just before the jump</td>
+        </tr>
+        <tr>
+            <td>or varName //logical or memory into accumulator</td>
+        </tr>
+        <tr>
+            <td>xor varName //logical xor memory into accumulator</td>
+        </tr>
+        <tr>
+            <td>Not //logical not memory into accumulator</td>
+        </tr>
+
+    </table>
+    <form id="thisform">
+        <input type="button" onclick="parse()" value="Translate">
+    </form>
+
+    <table id="t01">
+        <tr>
+            <th>Line #</th>
+            <th>Pseudocode</th>
+            <th>IBCM Code</th>
+        </tr>
+        <tr>
+            <td>
+                <textarea id="style1" readonly>000
+001
+002
+003
+004
+005
+006
+007
+008
+009
+00A
+00B
+00C
+00D
+00E
+00F
+010
+011
+012
+013
+014
+015
+016
+017
+018
+019
+01A
+01B
+01C
+01D
+01E
+01F
+020
+021
+022
+023
+024
+025
+026
+027
+028
+029
+02A
+02B
+02C
+02D
+02E
+02F
+030
+031
+032
+033
+034
+035
+036
+037
+038
+039
+03A
+03B
+03C
+03D
+03E
+03F
+040
+041
+042
+043
+044
+045
+046
+047
+048
+049
+04A
+04B
+04C
+04D
+04E
+04F
+050
+051
+052
+053
+054
+055
+056
+057
+058
+059
+05A
+05B
+05C
+05D
+05E
+05F
+060
+061
+062
+063
+064
+065
+066
+067
+068
+069
+06A
+06B
+06C
+06D
+06E
+06F
+070
+071
+072
+073
+074
+075
+076
+077
+078
+079
+07A
+07B
+07C
+07D
+07E
+07F
+080
+081
+082
+083
+084
+085
+086
+087
+088
+089
+08A
+08B
+08C
+08D
+08E
+08F
+090
+091
+092
+093
+094
+095
+096
+097
+098
+099
+09A
+09B
+09C
+09D
+09E
+09F
+0A0
+0A1
+0A2
+0A3
+0A4
+0A5
+0A6
+0A7
+0A8
+0A9
+0AA
+0AB
+0AC
+0AD
+0AE
+0AF
+0B0
+0B1
+0B2
+0B3
+0B4
+0B5
+0B6
+0B7
+0B8
+0B9
+0BA
+0BB
+0BC
+0BD
+0BE
+0BF
+0C0
+0C1
+0C2
+0C3
+0C4
+0C5
+0C6
+0C7
+0C8
+0C9
+0CA
+0CB
+0CC
+0CD
+0CE
+0CF
+0D0
+0D1
+0D2
+0D3
+0D4
+0D5
+0D6
+0D7
+0D8
+0D9
+0DA
+0DB
+0DC
+0DD
+0DE
+0DF
+0E0
+0E1
+0E2
+0E3
+0E4
+0E5
+0E6
+0E7
+0E8
+0E9
+0EA
+0EB
+0EC
+0ED
+0EE
+0EF
+0F0
+0F1
+0F2
+0F3
+0F4
+0F5
+0F6
+0F7
+0F8
+0F9
+0FA
+0FB
+0FC
+0FD
+0FE
+0FF
+                </textarea>
+            </td>
+
+            <td>
+                <textarea id="style2" form="thisform"></textarea>
+            </td>
+            <td>
+                <textarea id="style3" readonly> </textarea>
+            </td>
+        </tr>
+    </table>
+
+    <footer>Founders: Franklin Amaya; Isabel Alvarez; Amanda Murray</footer>
+
+    <script>
+        function parse() {
+            var theText = document.getElementById('style2');
+            var myText = theText.value;
+            var textArray = myText.split("\n");
+            var allCode = "";
+
+            //for each line
+            function pad(n, width, z) {
+                z = z || '0';
+                n = n + '';
+                return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+            }
+
+            var lineNum = 0;
+            var hash = new Map();
+            //processing the labels
+            while (lineNum < textArray.length) {
+                //storing labels in the hashtable
+                var text = textArray[lineNum];
+                var thisLabel = "";
+
+                var index = text.indexOf(":");
+                if (index == -1) {
+                    //break;
+                } else {
+                    thisLabel = text.substring(0, index);
+                    text = text.substring(index + 1);
+                    text = text.trim();
+                    var address = "";
+                    address = pad(lineNum, 3);
+                    hash.set(thisLabel, address);
+                    textArray[lineNum] = text;
+                }
+                lineNum = lineNum + 1;
+            }
+
+            lineNum = 0;
+
+            //processing the opcodes
+            while (lineNum < textArray.length) {
+                var opcode = "";
+                var val = "";
+                text = textArray[lineNum];
+                if (text.includes(" ")) {
+                    var parts = text.split(" ");
+                    opcode = parts[0];
+                    val = parts[1];
+                } else {
+                    opcode = text;
+                }
+
+                code = "";
+                //the big if-statement that processes the opcodes
+                if (opcode === "dw") {
+                    code = pad(val, 4);
+                } else if (opcode === "nop") {
+                    code = "B000";
+                } else if (opcode === "not") {
+                    code = "A000";
+                } else if (opcode === "load") {
+                    code = "3";
+                    code = code.concat(hash.get(val));
+                } else if (opcode === "store") {
+                    code = "4";
+                    code = code.concat(hash.get(val));
+                } else if (opcode === "add") {
+                    code = "5";
+                    code = code.concat(hash.get(val));
+                } else if (opcode === "sub") {
+                    code = "6";
+                    code = code.concat(hash.get(val));
+                } else if (opcode === "and") {
+                    code = "7";
+                    code = code.concat(hash.get(val));
+                } else if (opcode === "or") {
+                    code = "8";
+                    code = code.concat(hash.get(val));
+                } else if (opcode === "xor") {
+                    code = "9";
+                    code = code.concat(hash.get(val));
+                } else if (opcode === "jmp") {
+                    code = "C";
+                    code = code.concat(hash.get(val));
+                } else if (opcode === "jmpe") {
+                    code = "D";
+                    code = code.concat(hash.get(val));
+                } else if (opcode === "jmpl") {
+                    code = "E";
+                    code = code.concat(hash.get(val));
+                } else if (opcode === "brl") {
+                    code = "J";
+                    code = code.concat(hash.get(val));
+                } else if (opcode === "printh") {
+                    code = "1800";
+                } else if (opcode === "printa") {
+                    code = "1C00";
+                } else if (opcode === "readh") {
+                    code = "1000";
+                } else if (opcode === "reada") {
+                    code = "1400";
+                } else if (opcode === "halt") {
+                    code = "0000";
+                } else if (opcode === "shiftl") {
+                    code = "200";
+                    code = code.concat(val);
+                } else if (opcode === "shiftr") {
+                    code = "240";
+                    code = code.concat(val);
+                } else if (opcode === "rotatel") {
+                    code = "280";
+                    code = code.concat(val);
+                } else if (opcode === "rotater") {
+                    code = "2C0";
+                    code = code.concat(val);
+                }
+
+                allCode = allCode.concat(code);
+                allCode = allCode.concat("\n");
+
+                lineNum = lineNum + 1;
+            }
+
+            document.getElementById('style3').innerHTML = allCode;
+            return false;
+        }
+    </script>
+</body>
+
+</html>
